@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ASTRONOVA Railway Security System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+    <!-- Teachable Machine Image Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Language Toggle -->
+    <button id="languageToggle" onclick="toggleLanguage()">
+        தமிழ்
+    </button>
+
+    <h1 id="mainTitle">🤖 ASTRONOVA</h1>
+
+    <h2 id="mainSubtitle">
+        AI-Enabled Railway Security Inspection System
+    </h2>
+
+    <!-- Railway Environment Alert -->
+    <p id="obstacleAlert">
+        Checking railway environment...
+    </p>
+
+    <!-- Patrol Control Panel -->
+    <div class="control-panel">
+
+        <h3>🎮 Robot Patrol Control</h3>
+
+        <button onclick="startPatrol()">
+            ▶ Start Patrol
+        </button>
+
+        <button onclick="stopPatrol()">
+            ⏹ Stop Patrol
+        </button>
+
+        <p id="patrolStatus">
+            Patrol is ready
+        </p>
+
+    </div>
+
+    <div class="dashboard">
+
+        <!-- LiDAR Card -->
+        <div class="card">
+            <h3>📡 LiDAR Distance Monitoring</h3>
+            <p>Distance: <span id="lidar">--</span> cm</p>
+        </div>
+
+        <!-- Camera Card -->
+        <div class="card">
+            <h3>📷 Visual Inspection</h3>
+            <p>Status: <span id="camera">--</span></p>
+            <p id="cameraResult">--</p>
+        </div>
+
+        <!-- Motion Sensor Card -->
+        <div class="card">
+            <h3>🧭 Motion Sensor Data</h3>
+            <p>Roll: <span id="roll">--</span>°</p>
+            <p>Pitch: <span id="pitch">--</span>°</p>
+        </div>
+
+        <!-- GPS Card -->
+        <div class="card">
+            <h3>📍 GPS Location</h3>
+            <p>Latitude: <span id="latitude">--</span></p>
+            <p>Longitude: <span id="longitude">--</span></p>
+        </div>
+
+        <!-- GPS Map Card -->
+        <div class="card">
+            <h3>🗺️ Robot Location Map</h3>
+
+            <iframe
+                id="gpsMap"
+                width="100%"
+                height="250"
+                style="border: 0;"
+                loading="lazy"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=75.94%2C11.00%2C75.97%2C11.03&layer=mapnik">
+            </iframe>
+
+            <p>📍 Simulated GPS Location</p>
+        </div>
+
+        <!-- Screening Card -->
+        <div class="card">
+            <h3>🔍 Screening Review Status</h3>
+
+            <p id="narcoticsResult">
+                Checking...
+            </p>
+
+            <small>Simulation only</small>
+        </div>
+
+        <!-- Servo Card -->
+        <div class="card">
+            <h3>⚙️ Servo Movement</h3>
+            <p id="servo">--</p>
+        </div>
+
+        <!-- Robot Status Card -->
+        <div class="card">
+            <h3>🤖 Robot Patrol Status</h3>
+            <p id="robot">--</p>
+        </div>
+
+        <!-- AI Analysis Card -->
+        <div class="card">
+
+            <h3>🧠 AI Environment Analysis</h3>
+
+            <input
+                type="file"
+                id="imageUpload"
+                accept="image/*">
+
+            <br><br>
+
+            <img
+                id="previewImage"
+                width="200"
+                style="display: none;"
+                alt="Uploaded image preview">
+
+            <!-- AI Prediction Result -->
+            <p id="aiResult">
+                Loading AI model...
+            </p>
+
+            <!-- AI Alert Status -->
+            <p id="aiAlert">
+                No Alert
+            </p>
+
+            <small>
+                AI screening demo - expert verification required
+            </small>
+
+        </div>
+
+        <!-- Sensor Fusion Card -->
+        <div class="card">
+
+            <h3>🔗 Sensor Fusion Status</h3>
+
+            <p>
+                LiDAR:
+                <span id="fusionLidar">--</span>
+            </p>
+
+            <p>
+                Camera:
+                <span id="fusionCamera">--</span>
+            </p>
+
+            <p>
+                Motion:
+                <span id="fusionMotion">--</span>
+            </p>
+
+            <p>
+                GPS:
+                <span id="fusionGPS">--</span>
+            </p>
+
+            <h3>
+                Overall Status:
+                <span id="fusionStatus">
+                    Checking...
+                </span>
+            </h3>
+
+            <small>
+                Sensor fusion simulation only
+            </small>
+
+        </div>
+
+        <!-- Obstacle Avoidance Card -->
+        <div class="card">
+
+            <h3>🚧 Obstacle Avoidance</h3>
+
+            <p>
+                Obstacle Status:
+                <span id="avoidanceStatus">
+                    Checking...
+                </span>
+            </p>
+
+            <p>
+                Robot Action:
+                <span id="robotAction">
+                    Waiting...
+                </span>
+            </p>
+
+            <p>
+                Movement:
+                <span id="movementStatus">
+                    --
+                </span>
+            </p>
+
+            <small>
+                Obstacle avoidance simulation only
+            </small>
+
+        </div>
+
+        <!-- Alert History Card -->
+        <div class="card">
+
+            <h3>📋 Alert History</h3>
+
+            <ul id="alertHistory">
+                <li>No alerts recorded</li>
+            </ul>
+
+            <button onclick="clearAlertHistory()">
+                Clear Alert History
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
